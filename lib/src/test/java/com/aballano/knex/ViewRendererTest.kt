@@ -1,0 +1,55 @@
+package com.aballano.knex
+
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import com.nhaarman.mockito_kotlin.mock
+import com.nhaarman.mockito_kotlin.whenever
+import org.junit.Before
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.mockito.Mock
+import org.mockito.MockitoAnnotations
+import org.robolectric.RobolectricTestRunner
+import org.robolectric.RuntimeEnvironment
+import org.robolectric.annotation.Config
+import java.util.concurrent.CountDownLatch
+import java.util.concurrent.TimeUnit
+
+@Config(sdk = [19], constants = BuildConfig::class)
+@RunWith(RobolectricTestRunner::class)
+class ViewKnexRendererTest {
+
+    @Mock lateinit var mockedParent: ViewGroup
+    @Mock lateinit var mockedInflater: LayoutInflater
+
+    @Before fun setUp() {
+        MockitoAnnotations.initMocks(this)
+        whenever(mockedParent.context).thenReturn(RuntimeEnvironment.application)
+    }
+
+    @Test fun `should call inflate function with context`() {
+        val latch = CountDownLatch(1)
+        val renderer = ViewKnexRenderer<Any, View>(
+              initFunction = { mock<View>().apply { latch.countDown() } },
+              renderFunction = { _, _ -> }
+        )
+
+        renderer.onCreate(mockedInflater, mockedParent)
+
+        assert(latch.await(1, TimeUnit.SECONDS))
+    }
+
+    @Test fun `should call render function with content and root view`() {
+        val latch = CountDownLatch(1)
+        val renderer = ViewKnexRenderer<Any, View>(
+              initFunction = { mock() },
+              renderFunction = { _, _ -> latch.countDown() }
+        )
+
+        renderer.onCreate(mockedInflater, mockedParent)
+        renderer.render("", 1, emptyList<Any>())
+
+        assert(latch.await(1, TimeUnit.SECONDS))
+    }
+}
