@@ -1,6 +1,8 @@
 <img src="./art/web_hi_res_512.png" width="250">
 
-KNex [![Build Status](https://travis-ci.org/aballano/knex.svg?branch=master)](https://travis-ci.org/aballano/knex) [![JitPack](https://jitpack.io/v/aballano/knex.svg)](https://jitpack.io/#aballano/knex) [![codecov](https://codecov.io/gh/aballano/knex/branch/master/graph/badge.svg)](https://codecov.io/gh/aballano/knex) 
+KNex 
+
+[![Build Status](https://travis-ci.org/aballano/knex.svg?branch=master)](https://travis-ci.org/aballano/knex) [![JitPack](https://jitpack.io/v/aballano/knex.svg)](https://jitpack.io/#aballano/knex) [![codecov](https://codecov.io/gh/aballano/knex/branch/master/graph/badge.svg)](https://codecov.io/gh/aballano/knex) 
 
 ===
 
