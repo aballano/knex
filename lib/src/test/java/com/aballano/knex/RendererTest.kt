@@ -11,7 +11,6 @@ import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.spy
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
-import org.junit.Before
 import org.junit.Test
 
 class KnexRendererTest {
@@ -45,8 +44,8 @@ class KnexRendererTest {
         assertk.assert {
             renderer.context
         }.thrownError {
-                this.actual is UninitializedPropertyAccessException
-            }
+            this.actual is UninitializedPropertyAccessException
+        }
 
         renderer.onCreate(mockedLayoutInflater, mockedParent)
 

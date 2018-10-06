@@ -4,19 +4,14 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.nhaarman.mockito_kotlin.mock
-import com.nhaarman.mockito_kotlin.whenever
 import com.aballano.knex.exception.KnexRendererNotFoundException
 import com.nhaarman.mockito_kotlin.doReturn
+import com.nhaarman.mockito_kotlin.mock
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
-import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.Mock
-import org.mockito.MockitoAnnotations
 import org.robolectric.RobolectricTestRunner
-import org.robolectric.RuntimeEnvironment
 import org.robolectric.annotation.Config
 import java.util.Date
 
@@ -132,7 +127,8 @@ class KnexBuilderTest {
         knexBuilder.getKnexFactory(KnexContent(Any(), -1))
     }
 
-    @Test fun `should add prototype and configure renderer binding for type with multiple prototypes`() {
+    @Test
+    fun `should add prototype and configure renderer binding for type with multiple prototypes`() {
         val knexBuilder = KnexBuilder.create()
               .bind(Int::class) { IntKnexRenderer() }
               .bind(Boolean::class) { BooleanKnexRenderer() }
