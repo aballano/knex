@@ -1,47 +1,44 @@
 package com.aballano.knex
 
-import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
-import com.nhaarman.mockito_kotlin.*
+import androidx.recyclerview.widget.RecyclerView
+import com.nhaarman.mockito_kotlin.any
+import com.nhaarman.mockito_kotlin.doReturn
+import com.nhaarman.mockito_kotlin.eq
+import com.nhaarman.mockito_kotlin.mock
+import com.nhaarman.mockito_kotlin.spy
+import com.nhaarman.mockito_kotlin.verify
+import com.nhaarman.mockito_kotlin.whenever
 import org.junit.Assert.assertEquals
-import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.Mock
-import org.mockito.MockitoAnnotations
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.RuntimeEnvironment
 import org.robolectric.annotation.Config
-import java.util.*
+
+private const val ANY_SIZE = 11
+private const val ANY_POSITION = 2
+private val ANY_OBJECT = Any()
+private val ANY_OTHER_OBJECT = Any()
+private val ANY_OBJECT_COLLECTION = listOf(Any(), Any())
+private const val ANY_ITEM_VIEW_TYPE = 3
 
 @Config(sdk = [19], constants = BuildConfig::class)
 @RunWith(RobolectricTestRunner::class)
 class KnexAdapterTest {
 
-    lateinit var spyAdapter: KnexAdapter<Any>
-
-    @Mock lateinit var mockedKnexBuilder: KnexBuilder
-    @Mock lateinit var mockedCollection: MutableList<Any>
-    @Mock lateinit var mockedParent: ViewGroup
-    @Mock lateinit var mockedRenderer: ObjectKnexRenderer
-    @Mock lateinit var mockedKnexViewHolder: KnexViewHolder
-    @Mock lateinit var mockedRecyclerView: RecyclerView
-
-    companion object {
-        private const val ANY_SIZE = 11
-        private const val ANY_POSITION = 2
-        private val ANY_OBJECT = Any()
-        private val ANY_OTHER_OBJECT = Any()
-        private val ANY_OBJECT_COLLECTION = LinkedList<Any>()
-        private const val ANY_ITEM_VIEW_TYPE = 3
+    private val mockedKnexBuilder: KnexBuilder = mock()
+    private val mockedCollection: MutableList<Any> = mock()
+    private val mockedRenderer: ObjectKnexRenderer = mock()
+    private val mockedKnexViewHolder: KnexViewHolder = mock()
+    private val mockedRecyclerView: RecyclerView = mock()
+    private val mockedParent: ViewGroup = mock {
+        on { context } doReturn RuntimeEnvironment.application
     }
 
-    @Before fun setUp() {
-        MockitoAnnotations.initMocks(this)
-        whenever(mockedParent.context).thenReturn(RuntimeEnvironment.application)
+    private val spyAdapter: KnexAdapter<Any> =
+          spy(KnexAdapter(mockedKnexBuilder, mockedCollection))
 
-        spyAdapter = spy(KnexAdapter(mockedKnexBuilder, mockedCollection))
-    }
 
     @Test fun `should return the collection`() {
         assertEquals(mockedCollection, spyAdapter.getCollection())

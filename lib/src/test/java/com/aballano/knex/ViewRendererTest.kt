@@ -3,6 +3,7 @@ package com.aballano.knex
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.whenever
 import org.junit.Before
@@ -20,12 +21,9 @@ import java.util.concurrent.TimeUnit
 @RunWith(RobolectricTestRunner::class)
 class ViewKnexRendererTest {
 
-    @Mock lateinit var mockedParent: ViewGroup
-    @Mock lateinit var mockedInflater: LayoutInflater
-
-    @Before fun setUp() {
-        MockitoAnnotations.initMocks(this)
-        whenever(mockedParent.context).thenReturn(RuntimeEnvironment.application)
+    private val mockedInflater: LayoutInflater = mock()
+    private val mockedParent: ViewGroup = mock {
+        on { context } doReturn RuntimeEnvironment.application
     }
 
     @Test fun `should call inflate function with context`() {
