@@ -1,20 +1,21 @@
-@file:Suppress("MemberVisibilityCanPrivate")
+@file:Suppress("MemberVisibilityCanBePrivate")
 
 package com.aballano.knex
 
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.RecyclerView.Adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.Adapter
 import java.util.ArrayList
 
 /**
  * RecyclerView.Adapter extension created to work with KnexRenderer instances without the need of creating a new Adapter
  * every time.
  */
-open class KnexAdapter<T : Any>(internal val knexBuilder: KnexBuilder,
-                       private val collection: MutableList<T> = ArrayList(10)) :
-      RecyclerView.Adapter<KnexViewHolder>() {
+open class KnexAdapter<T : Any>(
+      internal val knexBuilder: KnexBuilder,
+      private val collection: MutableList<T> = ArrayList(10)
+) : RecyclerView.Adapter<KnexViewHolder>() {
 
     init {
         setHasStableIds(true)

@@ -4,16 +4,13 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.nhaarman.mockito_kotlin.mock
-import com.nhaarman.mockito_kotlin.whenever
 import com.aballano.knex.exception.KnexRendererNotFoundException
+import com.nhaarman.mockito_kotlin.doReturn
+import com.nhaarman.mockito_kotlin.mock
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
-import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.Mock
-import org.mockito.MockitoAnnotations
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 import java.util.Date
@@ -21,16 +18,11 @@ import java.util.Date
 @Config(sdk = [19], constants = BuildConfig::class)
 @RunWith(RobolectricTestRunner::class)
 class KnexBuilderTest {
-
-    @Mock lateinit var mockedParent: ViewGroup
-    @Mock lateinit var mockedContext: Context
-    @Mock lateinit var mockedLayoutInflater: LayoutInflater
-    @Mock lateinit var mockedRendererView: View
-
-    @Before fun setUp() {
-        initializeMocks()
-
-        whenever(mockedParent.context).thenReturn(mockedContext)
+    private val mockedContext: Context = mock()
+    private val mockedLayoutInflater: LayoutInflater = mock()
+    private val mockedRendererView: View = mock()
+    private val mockedParent: ViewGroup = mock {
+        on { context } doReturn mockedContext
     }
 
     @Test fun `should build viewholder with provided renderer`() {
@@ -135,7 +127,8 @@ class KnexBuilderTest {
         knexBuilder.getKnexFactory(KnexContent(Any(), -1))
     }
 
-    @Test fun `should add prototype and configure renderer binding for type with multiple prototypes`() {
+    @Test
+    fun `should add prototype and configure renderer binding for type with multiple prototypes`() {
         val knexBuilder = KnexBuilder.create()
               .bind(Int::class) { IntKnexRenderer() }
               .bind(Boolean::class) { BooleanKnexRenderer() }
@@ -176,10 +169,6 @@ class KnexBuilderTest {
               .buildWith(list)
 
         assertEquals(list, adapter.getCollection())
-    }
-
-    private fun initializeMocks() {
-        MockitoAnnotations.initMocks(this)
     }
 
     open class ParentClass internal constructor()
