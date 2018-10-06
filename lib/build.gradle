@@ -8,12 +8,11 @@ jacoco {
 }
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion "26.0.3"
+    compileSdkVersion 28
 
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 26
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
     }
@@ -27,17 +26,15 @@ android {
 dependencies {
     def mockito_version = 'latest.release'
 
-    implementation 'com.android.support:recyclerview-v7:26.1.0'
+    api 'androidx.recyclerview:recyclerview:1.0.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'com.github.aballano:MnemoniK:1.0.0'
 
     testImplementation 'junit:junit:4.12'
-    testImplementation 'org.robolectric:robolectric:3.7.1'
-    testImplementation "com.nhaarman:mockito-kotlin:1.5.0"
+    testImplementation 'org.robolectric:robolectric:3.8'
+    testImplementation "com.nhaarman:mockito-kotlin:1.6.0"
     testImplementation "org.mockito:mockito-core:$mockito_version"
     testImplementation "com.willowtreeapps.assertk:assertk:0.9"
-
-    androidTestImplementation "org.mockito:mockito-android:$mockito_version"
 }
 
 task jacocoTestReport(type: JacocoReport, dependsOn: "testDebugUnitTest") {
