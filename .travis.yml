@@ -13,7 +13,6 @@ android:
 
 script:
 
-  - ./gradlew testDebugUnitTest jacocoTestReport
   - ./gradlew clean build
 
 after_success:
