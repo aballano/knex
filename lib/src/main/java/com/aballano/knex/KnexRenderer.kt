@@ -23,5 +23,9 @@ abstract class KnexRenderer<in T : Any> {
 
     open fun setUpView() {}
 
+    open fun onAttached() {}
+
+    open fun onDetached() {}
+
     abstract fun render(content: T, position: Int, payloads: List<*>)
 }

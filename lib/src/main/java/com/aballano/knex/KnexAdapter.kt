@@ -47,6 +47,16 @@ open class KnexAdapter<T : Any>(
         viewHolder.knexRenderer.render(getItem(position), position, payloads)
     }
 
+    override fun onViewAttachedToWindow(viewHolder: KnexViewHolder) {
+        super.onViewAttachedToWindow(viewHolder)
+        viewHolder.knexRenderer.onAttached()
+    }
+
+    override fun onViewDetachedFromWindow(viewHolder: KnexViewHolder) {
+        viewHolder.knexRenderer.onDetached()
+        super.onViewDetachedFromWindow(viewHolder)
+    }
+
     /**
      * @see MutableList.add
      */
