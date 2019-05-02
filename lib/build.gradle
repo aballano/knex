@@ -3,9 +3,14 @@ apply plugin: 'kotlin-android'
 apply plugin: 'jacoco'
 
 jacoco {
-    toolVersion = "0.7.9"
+    toolVersion = "0.8.3"
     reportsDir = file("$buildDir/reports")
 }
+
+tasks.withType(Test) {
+    jacoco.includeNoLocationClasses = true
+}
+
 
 android {
     compileSdkVersion 28
