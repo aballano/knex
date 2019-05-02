@@ -30,7 +30,9 @@ class KnexAdapterTest {
     private val mockedKnexBuilder: KnexBuilder = mock()
     private val mockedCollection: MutableList<Any> = mock()
     private val mockedRenderer: ObjectKnexRenderer = mock()
-    private val mockedKnexViewHolder: KnexViewHolder = mock()
+    private val mockedKnexViewHolder: KnexViewHolder = mock {
+        on { knexRenderer } doReturn mockedRenderer
+    }
     private val mockedRecyclerView: RecyclerView = mock()
     private val mockedParent: ViewGroup = mock {
         on { context } doReturn RuntimeEnvironment.application
@@ -182,8 +184,6 @@ class KnexAdapterTest {
 
     @Test fun `should get renderer from view holder and pass content on bind`() {
         whenever(mockedCollection[ANY_POSITION]).thenReturn(ANY_OBJECT)
-        whenever(mockedKnexViewHolder.knexRenderer).thenReturn(mockedRenderer)
-
         spyAdapter.onBindViewHolder(mockedKnexViewHolder, ANY_POSITION)
 
         verify(mockedRenderer).render(ANY_OBJECT, ANY_POSITION, emptyList<Any>())
@@ -191,16 +191,9 @@ class KnexAdapterTest {
 
     @Test fun `should get renderer from view holder and render it on bind`() {
         whenever(mockedCollection[ANY_POSITION]).thenReturn(ANY_OBJECT)
-        whenever(mockedKnexViewHolder.knexRenderer).thenReturn(mockedRenderer)
-
         spyAdapter.onBindViewHolder(mockedKnexViewHolder, ANY_POSITION)
 
         verify(mockedRenderer).render(ANY_OBJECT, ANY_POSITION, emptyList<Any>())
-    }
-
-    @Test(expected = NullPointerException::class)
-    fun `should throw exception if null renderer`() {
-        spyAdapter.onBindViewHolder(mockedKnexViewHolder, ANY_POSITION)
     }
 
     @Test fun `should hook into recycler view`() {
@@ -208,5 +201,23 @@ class KnexAdapterTest {
         adapter.into(mockedRecyclerView)
 
         verify(mockedRecyclerView).adapter = adapter
+    }
+
+    @Test fun `should forward attach event`() {
+        val adapter = KnexAdapter<Any>(mockedKnexBuilder)
+        adapter.into(mockedRecyclerView)
+
+        adapter.onViewAttachedToWindow(mockedKnexViewHolder)
+
+        verify(mockedKnexViewHolder.knexRenderer).onAttached()
+    }
+
+    @Test fun `should forward detach event`() {
+        val adapter = KnexAdapter<Any>(mockedKnexBuilder)
+        adapter.into(mockedRecyclerView)
+
+        adapter.onViewDetachedFromWindow(mockedKnexViewHolder)
+
+        verify(mockedKnexViewHolder.knexRenderer).onDetached()
     }
 }
