@@ -8,6 +8,7 @@ import com.aballano.knex.exception.KnexRendererNotFoundException
 import kotlin.reflect.KClass
 
 typealias KnexFactory<T> = () -> KnexRenderer<T>
+
 fun <T : Any> KnexFactory<T>.type() = hashCode()
 
 /**
@@ -22,8 +23,8 @@ fun <T : Any> KnexFactory<T>.type() = hashCode()
  * because RecyclerView class already implements the view recycling for us.
  */
 open class KnexBuilder private constructor(
-      protected val classBindings: MutableMap<KClass<Any>, KnexFactory<*>>,
-      protected val typeBindings: SparseArray<KnexFactory<KnexContent<Any>>>
+    protected val classBindings: MutableMap<KClass<Any>, KnexFactory<*>>,
+    protected val typeBindings: SparseArray<KnexFactory<KnexContent<Any>>>
 ) {
 
     /**
@@ -38,18 +39,18 @@ open class KnexBuilder private constructor(
      * @return ready to use RendererViewHolder instance.
      */
     open fun buildKnexViewHolder(parent: ViewGroup, layoutInflater: LayoutInflater, viewType: Int): KnexViewHolder =
-          getKnexRendererByViewType(viewType).let {
-              it.onCreate(layoutInflater, parent)
+        getKnexRendererByViewType(viewType).let {
+            it.onCreate(layoutInflater, parent)
 
-              @Suppress("UNCHECKED_CAST") KnexViewHolder(it as KnexRenderer<Any>)
-          }
+            @Suppress("UNCHECKED_CAST") KnexViewHolder(it as KnexRenderer<Any>)
+        }
 
     private fun getKnexRendererByViewType(viewType: Int): KnexRenderer<*> = searchCachedKnexFactoryByViewType(viewType)()
 
     private val searchCachedKnexFactoryByViewType: (viewType: Int) -> KnexFactory<*> by lazy {
         fun searchKnexFactoryByViewType(viewType: Int): KnexFactory<*> =
-              (typeBindings.values + classBindings.values).find { it.type() == viewType }
-                    ?: throw KnexRendererNotFoundException("No prototype was found for the viewType $viewType")
+            (typeBindings.values + classBindings.values).find { it.type() == viewType }
+                ?: throw KnexRendererNotFoundException("No prototype was found for the viewType $viewType")
 
         ::searchKnexFactoryByViewType.memoize()
     }
@@ -83,7 +84,7 @@ open class KnexBuilder private constructor(
 
     interface ExtendedRendererBuilder<T : Any> {
         fun <Subtype : Type, Type : Any> bind(clx: KClass<Subtype>, factory: KnexFactory<Type>):
-              BindedExtendedRendererBuilder<T>
+            BindedExtendedRendererBuilder<T>
 
         fun <Type : KnexContent<Any>> bind(type: Int, factory: KnexFactory<Type>): BindedExtendedRendererBuilder<T>
     }
@@ -97,7 +98,7 @@ open class KnexBuilder private constructor(
         override fun build(): KnexAdapter<T> = buildWith(ArrayList(10))
 
         override fun buildWith(collection: MutableList<T>): KnexAdapter<T> =
-              KnexAdapter(KnexBuilder(classBinding, typeBindings), collection)
+            KnexAdapter(KnexBuilder(classBinding, typeBindings), collection)
 
         private val classBinding: MutableMap<KClass<Any>, KnexFactory<*>> = HashMap()
         private val typeBindings: SparseArray<KnexFactory<KnexContent<Any>>> = SparseArray()
@@ -109,11 +110,13 @@ open class KnexBuilder private constructor(
          * @param factory used to generate a Renderer.
          */
         override fun <Subtype : Type, Type : Any> bind(clx: KClass<Subtype>, factory: KnexFactory<Type>):
-              BindedExtendedRendererBuilder<T> = this.also {
+            BindedExtendedRendererBuilder<T> = this.also {
             if (clx == Any::class || clx == Object::class) {
-                throw IllegalArgumentException("Making a bind to the Any/Object class means that every item will be mapped "
-                      + "to the specified Renderer and thus all other bindings are invalidated. Please use the standard "
-                      + "constructor for that")
+                throw IllegalArgumentException(
+                    "Making a bind to the Any/Object class means that every item will be mapped " +
+                        "to the specified Renderer and thus all other bindings are invalidated. Please use the standard " +
+                        "constructor for that"
+                )
             }
             @Suppress("UNCHECKED_CAST") classBinding.put(clx as KClass<Any>, factory)
         }
@@ -125,7 +128,7 @@ open class KnexBuilder private constructor(
          * @param factory used to generate a Renderer.
          */
         override fun <Type : KnexContent<Any>> bind(type: Int, factory: KnexFactory<Type>):
-              BindedExtendedRendererBuilder<T> = this.also {
+            BindedExtendedRendererBuilder<T> = this.also {
             @Suppress("UNCHECKED_CAST") typeBindings.put(type, factory as KnexFactory<KnexContent<Any>>)
         }
     }
@@ -138,17 +141,16 @@ open class KnexBuilder private constructor(
         fun create(): ExtendedRendererBuilder<Any> = Builder()
 
         inline fun <reified T : Any> create(noinline factory: KnexFactory<T>): BindedExtendedRendererBuilder<T> =
-              Builder<T>().apply { bind(T::class, factory) }
+            Builder<T>().apply { bind(T::class, factory) }
     }
-
 
     @Suppress("UNCHECKED_CAST") private val <V> SparseArray<V>.values: MutableCollection<V>
         get() {
             fun <V> generateValues(sparseArray: SparseArray<V>) =
-                  (0 until sparseArray.size())
-                        .map { sparseArray.valueAt(it) }
-                        .toMutableList()
-                        .also { SparseArrayValuesCache[sparseArray] = it }
+                (0 until sparseArray.size())
+                    .map { sparseArray.valueAt(it) }
+                    .toMutableList()
+                    .also { SparseArrayValuesCache[sparseArray] = it }
             return SparseArrayValuesCache[this] as MutableCollection<V>? ?: generateValues(this)
         }
 

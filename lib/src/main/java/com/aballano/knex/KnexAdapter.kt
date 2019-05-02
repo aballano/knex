@@ -13,8 +13,8 @@ import java.util.ArrayList
  * every time.
  */
 open class KnexAdapter<T : Any>(
-      internal val knexBuilder: KnexBuilder,
-      private val collection: MutableList<T> = ArrayList(10)
+    internal val knexBuilder: KnexBuilder,
+    private val collection: MutableList<T> = ArrayList(10)
 ) : RecyclerView.Adapter<KnexViewHolder>() {
 
     init {
@@ -37,7 +37,7 @@ open class KnexAdapter<T : Any>(
     override fun getItemViewType(position: Int) = knexBuilder.getItemViewType(getItem(position))
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int) =
-          knexBuilder.buildKnexViewHolder(viewGroup, LayoutInflater.from(viewGroup.context), viewType)
+        knexBuilder.buildKnexViewHolder(viewGroup, LayoutInflater.from(viewGroup.context), viewType)
 
     override fun onBindViewHolder(viewHolder: KnexViewHolder, position: Int) {
         onBindViewHolder(viewHolder, position, emptyList())

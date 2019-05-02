@@ -25,8 +25,8 @@ class ViewKnexRendererTest {
     @Test fun `should call inflate function with context`() {
         val latch = CountDownLatch(1)
         val renderer = ViewKnexRenderer<Any, View>(
-              initFunction = { mock<View>().apply { latch.countDown() } },
-              renderFunction = { _, _ -> }
+            initFunction = { mock<View>().apply { latch.countDown() } },
+            renderFunction = { _, _ -> }
         )
 
         renderer.onCreate(mockedInflater, mockedParent)
@@ -37,8 +37,8 @@ class ViewKnexRendererTest {
     @Test fun `should call render function with content and root view`() {
         val latch = CountDownLatch(1)
         val renderer = ViewKnexRenderer<Any, View>(
-              initFunction = { mock() },
-              renderFunction = { _, _ -> latch.countDown() }
+            initFunction = { mock() },
+            renderFunction = { _, _ -> latch.countDown() }
         )
 
         renderer.onCreate(mockedInflater, mockedParent)

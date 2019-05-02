@@ -8,5 +8,5 @@ import com.aballano.knex.sample.R
 class FooterKnexRenderer : SectionKnexRenderer() {
 
     override fun inflate(inflater: LayoutInflater, parent: ViewGroup): View =
-          inflater.inflate(R.layout.footer_view, parent, false)
+        inflater.inflate(R.layout.footer_view, parent, false)
 }
