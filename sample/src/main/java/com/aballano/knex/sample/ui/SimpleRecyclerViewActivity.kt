@@ -21,8 +21,8 @@ class SimpleRecyclerViewActivity : Activity() {
 
         val videoCollection = VideoGenerator.generateList(VIDEO_COUNT)
         val adapter = KnexBuilder.create(::VideoKnexRenderer)
-              .build()
-              .into(recyclerView)
+            .build()
+            .into(recyclerView)
 
         videoCollection.forEach { adapter.add(it) }
     }

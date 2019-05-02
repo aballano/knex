@@ -1,6 +1,7 @@
 package com.aballano.knex.sample.model
 
-import java.util.*
+import java.util.HashMap
+import java.util.Random
 
 object VideoGenerator {
 

@@ -1,0 +1,8 @@
+root = true
+[*.{kt,kts}]
+# possible values: number (e.g. 2), "unset" (makes ktlint ignore indentation completely)
+indent_size=4
+continuation_indent_size=4
+insert_final_newline=true
+# Disable temporary. There is bug in ktlint (as for verins 0.15). Max line is enforced by Detekt
+max_line_length=124

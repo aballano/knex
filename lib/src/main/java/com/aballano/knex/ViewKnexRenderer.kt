@@ -11,14 +11,14 @@ import android.view.ViewGroup
  * @param View The View type.
  */
 open class ViewKnexRenderer<in Content : Any, out View : android.view.View>(
-      private val initFunction: (Context) -> View,
-      private val renderFunction: (Content, View) -> Unit
+    private val initFunction: (Context) -> View,
+    private val renderFunction: (Content, View) -> Unit
 ) : KnexRenderer<Content>() {
 
     override fun inflate(inflater: LayoutInflater, parent: ViewGroup): View =
-          initFunction(parent.context)
+        initFunction(parent.context)
 
     @Suppress("UNCHECKED_CAST")
     override fun render(content: Content, position: Int, payloads: List<*>) =
-          renderFunction(content, rootView as View)
+        renderFunction(content, rootView as View)
 }

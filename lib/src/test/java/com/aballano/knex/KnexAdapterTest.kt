@@ -39,8 +39,7 @@ class KnexAdapterTest {
     }
 
     private val spyAdapter: KnexAdapter<Any> =
-          spy(KnexAdapter(mockedKnexBuilder, mockedCollection))
-
+        spy(KnexAdapter(mockedKnexBuilder, mockedCollection))
 
     @Test fun `should return the collection`() {
         assertEquals(mockedCollection, spyAdapter.getCollection())

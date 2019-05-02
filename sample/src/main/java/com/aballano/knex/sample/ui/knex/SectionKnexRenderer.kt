@@ -14,7 +14,7 @@ open class SectionKnexRenderer : KnexRenderer<KnexContent<String>>() {
     private val title: TextView by bindView(R.id.tv_title)
 
     override fun inflate(inflater: LayoutInflater, parent: ViewGroup): View =
-          inflater.inflate(R.layout.section_view, parent, false)
+        inflater.inflate(R.layout.section_view, parent, false)
 
     override fun render(content: KnexContent<String>, position: Int, payloads: List<*>) {
         title.text = content.item
