@@ -1,6 +1,6 @@
 language: android
 
-sudo: true
+sudo: false
 
 android:
   components:
@@ -12,7 +12,7 @@ android:
     - extra-android-m2repository
 
 script:
-  - ./gradlew clean build
+  - ./gradlew clean build jacocoTestReport
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
