@@ -196,15 +196,13 @@ class KnexAdapterTest {
     }
 
     @Test fun `should hook into recycler view`() {
-        val adapter = KnexAdapter<Any>(mockedKnexBuilder)
-        adapter.into(mockedRecyclerView)
+        val adapter = KnexAdapter<Any>(mockedKnexBuilder).into(mockedRecyclerView)
 
         verify(mockedRecyclerView).adapter = adapter
     }
 
     @Test fun `should forward attach event`() {
-        val adapter = KnexAdapter<Any>(mockedKnexBuilder)
-        adapter.into(mockedRecyclerView)
+        val adapter = KnexAdapter<Any>(mockedKnexBuilder).into(mockedRecyclerView)
 
         adapter.onViewAttachedToWindow(mockedKnexViewHolder)
 
@@ -212,8 +210,7 @@ class KnexAdapterTest {
     }
 
     @Test fun `should forward detach event`() {
-        val adapter = KnexAdapter<Any>(mockedKnexBuilder)
-        adapter.into(mockedRecyclerView)
+        val adapter = KnexAdapter<Any>(mockedKnexBuilder).into(mockedRecyclerView)
 
         adapter.onViewDetachedFromWindow(mockedKnexViewHolder)
 

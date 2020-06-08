@@ -5,13 +5,13 @@ import android.view.View
 import android.view.ViewGroup
 import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.mock
+import java.util.concurrent.CountDownLatch
+import java.util.concurrent.TimeUnit
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.RuntimeEnvironment
 import org.robolectric.annotation.Config
-import java.util.concurrent.CountDownLatch
-import java.util.concurrent.TimeUnit
 
 @Config(sdk = [19], constants = BuildConfig::class)
 @RunWith(RobolectricTestRunner::class)
@@ -22,7 +22,8 @@ class ViewKnexRendererTest {
         on { context } doReturn RuntimeEnvironment.application
     }
 
-    @Test fun `should call inflate function with context`() {
+    @Test
+    fun `should call inflate function with context`() {
         val latch = CountDownLatch(1)
         val renderer = ViewKnexRenderer<Any, View>(
             initFunction = { mock<View>().apply { latch.countDown() } },
@@ -34,7 +35,8 @@ class ViewKnexRendererTest {
         assert(latch.await(1, TimeUnit.SECONDS))
     }
 
-    @Test fun `should call render function with content and root view`() {
+    @Test
+    fun `should call render function with content and root view`() {
         val latch = CountDownLatch(1)
         val renderer = ViewKnexRenderer<Any, View>(
             initFunction = { mock() },
