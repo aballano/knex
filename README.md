@@ -179,24 +179,6 @@ allprojects {
 }
 
 dependencies {
-        compile 'com.github.aballano:knex:1.0'
+        compile 'com.github.aballano:knex:X.X'
 }
 ```
-
-Or declare it into your pom.xml
-
-```xml
-<repositories>
-    <repository>
-        <id>jitpack.io</id>
-        <url>https://jitpack.io</url>
-    </repository>
-</repositories>
-
-<dependency>
-    <groupId>com.github.aballano</groupId>
-    <artifactId>knex</artifactId>
-    <version>1.0</version>
-</dependency>
-```
-
