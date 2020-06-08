@@ -7,12 +7,12 @@ import android.app.Dialog
 import android.app.DialogFragment
 import android.app.Fragment
 import android.view.View
+import androidx.fragment.app.DialogFragment as SupportDialogFragment
+import androidx.fragment.app.Fragment as SupportFragment
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.aballano.knex.KnexRenderer
 import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty
-import androidx.fragment.app.DialogFragment as SupportDialogFragment
-import androidx.fragment.app.Fragment as SupportFragment
 
 fun <V : View> KnexRenderer<*>.bindView(id: Int):
     ReadOnlyProperty<KnexRenderer<*>, V> = required(id, viewFinder)

@@ -7,13 +7,13 @@ import android.view.ViewGroup
 import com.aballano.knex.exception.KnexRendererNotFoundException
 import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.mock
+import java.util.Date
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
-import java.util.Date
 
 @Config(sdk = [19], constants = BuildConfig::class)
 @RunWith(RobolectricTestRunner::class)
@@ -25,7 +25,8 @@ class KnexBuilderTest {
         on { context } doReturn mockedContext
     }
 
-    @Test fun `should build viewholder with provided renderer`() {
+    @Test
+    fun `should build viewholder with provided renderer`() {
         val renderer = ObjectKnexRenderer(mockedRendererView)
         val factory = { renderer }
 
@@ -55,7 +56,8 @@ class KnexBuilderTest {
         knexBuilder.buildKnexViewHolder(mockedParent, mockedLayoutInflater, factory.type() + 1)
     }
 
-    @Test fun `should get right class binding factory`() {
+    @Test
+    fun `should get right class binding factory`() {
         val knexBuilder = KnexBuilder.create()
             .bind(Number::class) { ObjectKnexRenderer() }
             .bind(String::class) { StringKnexRenderer() }
@@ -66,7 +68,8 @@ class KnexBuilderTest {
         assertEquals(StringKnexRenderer::class, knexBuilder.getKnexFactory("").kclass())
     }
 
-    @Test fun `should get right type binding factory`() {
+    @Test
+    fun `should get right type binding factory`() {
         val knexBuilder = KnexBuilder.create()
             .bind(Number::class) { ObjectKnexRenderer() }
             .bind(String::class) { StringKnexRenderer() }
@@ -89,7 +92,8 @@ class KnexBuilderTest {
         knexBuilder.getKnexFactory(Date()).kclass()
     }
 
-    @Test fun `should return type of factory`() {
+    @Test
+    fun `should return type of factory`() {
         val renderer = ObjectKnexRenderer(mockedRendererView)
 
         val knexBuilder = KnexBuilder.create()
@@ -103,7 +107,8 @@ class KnexBuilderTest {
         assertEquals(factory.type(), viewType)
     }
 
-    @Test fun `should add prototype and configure renderer binding for type`() {
+    @Test
+    fun `should add prototype and configure renderer binding for type`() {
         val type = 1
         val knexBuilder = KnexBuilder.create()
             .bind(type) { ContentObjectKnexRenderer() }
@@ -141,7 +146,8 @@ class KnexBuilderTest {
         assertEquals(IntKnexRenderer::class, knexBuilder.getKnexFactory(1).kclass())
     }
 
-    @Test fun `should check bindings that inherit parent class`() {
+    @Test
+    fun `should check bindings that inherit parent class`() {
         val knexBuilder = KnexBuilder.create()
             .bind(ParentClass::class) { ObjectKnexRenderer() }
             .build()
@@ -157,7 +163,8 @@ class KnexBuilderTest {
             .build()
     }
 
-    @Test fun `should create empty adapter`() {
+    @Test
+    fun `should create empty adapter`() {
         val adapter = KnexBuilder.create()
             .bind(String::class) { ObjectKnexRenderer() }
             .build()
@@ -165,7 +172,8 @@ class KnexBuilderTest {
         assertTrue(adapter.getCollection().isEmpty())
     }
 
-    @Test fun `should create adapter with items`() {
+    @Test
+    fun `should create adapter with items`() {
         val list = mutableListOf("1", "2", "3")
         val adapter = KnexBuilder.create(::StringKnexRenderer)
             .buildWith(list)
